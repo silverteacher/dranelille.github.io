@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline IA - Jeu Numérique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        /* ... (le reste du CSS reste identique) ... */
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1 class="title">Timeline IA</h1>
+            <p class="subtitle">Histoire de l'Intelligence Artificielle</p>
+        </div>
+
+        <div class="game-info">
+            <div>Cartes restantes: <span id="cards-remaining">4</span></div>
+            <div>Score: <span id="score">0</span>/4</div>
+            <div>Précision: <span id="accuracy">0%</span></div>
+        </div>
+
+        <div class="game-message" id="game-message"></div>
+
+        <div class="timeline" id="timeline">
+            <p style="color: #666; text-align: center; width: 100%;">La timeline apparaîtra ici</p>
+        </div>
+
+        <div class="placement-buttons" id="placement-buttons"></div>
+
+        <div class="player-hand">
+            <h3>Vos cartes</h3>
+            <div class="hand-cards" id="hand-cards"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="new-game-btn">Nouvelle Partie</button>
+            <button class="btn" id="rules-btn">Règles</button>
+            <button class="btn reveal-btn" id="reveal-btn" disabled>Révéler Solution</button>
+        </div>
+    </div>
+
+    <script>
+        // ... (le code JavaScript reste identique) ...
+    </script>
+</body>
+</html>

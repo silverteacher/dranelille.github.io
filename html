@@ -1,90 +1,262 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timeline IA - Jeu Numérique</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .game-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .title {
-            font-size: 2.5em;
-            color: #333;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        /* ... (le reste du CSS reste identique) ... */
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Timeline IA - Jeu Numérique</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+      color: #333;
+    }
+    .game-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .title {
+      font-size: 2.5em;
+      color: #333;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    .subtitle {
+      color: #666;
+      font-size: 1.1em;
+    }
+    .game-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      padding: 15px 20px;
+      border-radius: 15px;
+      color: white;
+    }
+    .timeline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      min-height: 120px;
+      padding: 20px;
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      border-radius: 15px;
+      margin-bottom: 30px;
+    }
+    .card {
+      width: 280px;
+      height: 180px;
+      background: white;
+      border-radius: 12px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    .card.selected {
+      border-color: #ff6b6b;
+      transform: scale(1.05);
+    }
+    .card.placed {
+      border-color: #51cf66;
+      cursor: default;
+    }
+    .card.correct-placement {
+      animation: correctPlacement 0.8s ease-in-out;
+    }
+    .card.error {
+      border-color: #ff6b6b;
+      animation: shake 0.5s ease-in-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    @keyframes correctPlacement {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); border-color: #ffd700; }
+      100% { transform: scale(1); border-color: #51cf66; }
+    }
+    .card-date {
+      font-size: 1.2em;
+      font-weight: bold;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 5px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .card-hidden-date {
+      background: #ccc;
+      color: #666;
+      text-align: center;
+    }
+    .card-event {
+      font-size: 1.1em;
+      color: #333;
+      line-height: 1.3;
+      font-weight: 600;
+      margin: 10px 0;
+    }
+    .card-detail {
+      font-size: 0.85em;
+      color: #777;
+      font-style: italic;
+      margin-top: 8px;
+    }
+    .player-hand {
+      margin-bottom: 30px;
+    }
+    .player-hand h3 {
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 1.3em;
+    }
+    .hand-cards {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      background: #764ba2;
+      border: none;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 15px;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(118,75,162,0.4);
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #667eea;
+    }
+  </style>
 </head>
 <body>
-    <div class="game-container">
-        <div class="header">
-            <h1 class="title">Timeline IA</h1>
-            <p class="subtitle">Histoire de l'Intelligence Artificielle</p>
-        </div>
-
-        <div class="game-info">
-            <div>Cartes restantes: <span id="cards-remaining">4</span></div>
-            <div>Score: <span id="score">0</span>/4</div>
-            <div>Précision: <span id="accuracy">0%</span></div>
-        </div>
-
-        <div class="game-message" id="game-message"></div>
-
-        <div class="timeline" id="timeline">
-            <p style="color: #666; text-align: center; width: 100%;">La timeline apparaîtra ici</p>
-        </div>
-
-        <div class="placement-buttons" id="placement-buttons"></div>
-
-        <div class="player-hand">
-            <h3>Vos cartes</h3>
-            <div class="hand-cards" id="hand-cards"></div>
-        </div>
-
-        <div class="controls">
-            <button class="btn" id="new-game-btn">Nouvelle Partie</button>
-            <button class="btn" id="rules-btn">Règles</button>
-            <button class="btn reveal-btn" id="reveal-btn" disabled>Révéler Solution</button>
-        </div>
+  <div class="game-container">
+    <div class="header">
+      <h1 class="title">Timeline IA - Jeu Numérique</h1>
+      <p class="subtitle">Placez les événements dans l'ordre chronologique</p>
     </div>
+    <div class="game-info">
+      <div>Score: <span id="score">0</span></div>
+      <div>Temps restant: <span id="timer">60</span> s</div>
+    </div>
+    <div class="timeline" id="timeline">
+      <!-- Cartes placées ici -->
+    </div>
+    <div class="player-hand">
+      <h3>Votre main</h3>
+      <div class="hand-cards" id="hand">
+        <!-- Cartes à placer ici -->
+      </div>
+    </div>
+    <div class="controls">
+      <button id="restartBtn">Recommencer</button>
+    </div>
+  </div>
 
-    <script>
-        // ... (le code JavaScript reste identique) ...
-    </script>
+  <script>
+    // Exemple simple d'initialisation (à compléter avec votre logique)
+    const timeline = document.getElementById('timeline');
+    const hand = document.getElementById('hand');
+    const scoreEl = document.getElementById('score');
+    const timerEl = document.getElementById('timer');
+    const restartBtn = document.getElementById('restartBtn');
+
+    let score = 0;
+    let timer = 60;
+    let timerInterval;
+
+    const events = [
+      { date: '1956', event: 'Naissance de l\'IA' },
+      { date: '1997', event: 'Deep Blue bat Kasparov' },
+      { date: '2012', event: 'Avènement du deep learning' },
+      { date: '2020', event: 'GPT-3 lancé' }
+    ];
+
+    function startGame() {
+      score = 0;
+      timer = 60;
+      scoreEl.textContent = score;
+      timerEl.textContent = timer;
+      hand.innerHTML = '';
+      timeline.innerHTML = '';
+
+      // Mélanger et afficher les cartes dans la main
+      const shuffled = events.sort(() => Math.random() - 0.5);
+      shuffled.forEach(ev => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.textContent = ev.event;
+        card.dataset.date = ev.date;
+        card.addEventListener('click', () => selectCard(card));
+        hand.appendChild(card);
+      });
+
+      if(timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timer--;
+        timerEl.textContent = timer;
+        if(timer <= 0) {
+          clearInterval(timerInterval);
+          alert('Temps écoulé ! Votre score : ' + score);
+        }
+      }, 1000);
+    }
+
+    let selectedCard = null;
+
+    function selectCard(card) {
+      if(selectedCard) {
+        selectedCard.classList.remove('selected');
+      }
+      selectedCard = card;
+      selectedCard.classList.add('selected');
+    }
+
+    // Vous pouvez ajouter la logique pour placer les cartes dans la timeline, vérifier l'ordre, etc.
+
+    restartBtn.addEventListener('click', startGame);
+
+    // Démarrer le jeu au chargement
+    startGame();
+  </script>
 </body>
 </html>
